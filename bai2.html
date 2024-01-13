@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css" media="screen">
+        .user_item {
+            color: green;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="userForm">
+        <label for="userId">ID:</label>
+        <input type="text" id="userId" name="userId">
+
+        <label for="userName">Name:</label>
+        <input type="text" id="userName" name="userName">
+
+        <label for="userGender">Gender:</label>
+        <select id="userGender" name="userGender">
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+        </select>
+
+        <button type="button" onclick="addUser()">Add</button>
+    </form>
+
+    <ul id="target">
+
+    </ul>
+
+    <script>
+        var users = [
+            { id: 1, name: "James Smith", gender: 1 },
+            { id: 2, name: "Isla Brown", gender: 2 },
+            { id: 3, name: "Amelia Davies", gender: 2 },
+            { id: 4, name: "Jacob Evans", gender: 1 }
+        ];
+        var target = document.querySelector("#target");
+
+        function generateUserList() {
+            // Xóa các thẻ li hiện tại trong ul
+            target.innerHTML = '';
+
+            // Lặp qua mảng người dùng và tạo thẻ li cho mỗi người dùng
+            users.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = user.name;
+
+                // Kiểm tra giới tính để thêm class tương ứng
+                if (user.gender === 1) {
+                    li.classList.add('user_item', 'male');
+                } else if (user.gender === 2) {
+                    li.classList.add('user_item', 'female');
+                }
+
+                // Thêm sự kiện click vào thẻ li
+                li.addEventListener('click', function() {
+                    alert('User ID: ' + user.id + '\nName: ' + user.name);
+                });
+
+                // Thêm thẻ li vào danh sách ul
+                target.appendChild(li);
+            });
+        }
+
+        function addUser() {
+            // Lấy giá trị từ form
+            var userId = document.getElementById('userId').value;
+            var userName = document.getElementById('userName').value;
+            var userGender = document.getElementById('userGender').value;
+
+            // Kiểm tra xem ID và Name có được nhập không
+            if (!userId || !userName) {
+                alert('Please enter both ID and Name.');
+                return;
+            }
+
+            // Chuyển giới tính thành số nguyên
+            userGender = parseInt(userGender);
+
+            // Thêm người dùng mới vào mảng
+            users.push({ id: userId, name: userName, gender: userGender });
+
+            // Generate lại danh sách
+            generateUserList();
+
+            // Reset form
+            document.getElementById('userId').value = '';
+            document.getElementById('userName').value = '';
+            document.getElementById('userGender').value = '1';
+        }
+
+        // Gọi hàm để tạo danh sách khi trang web tải xong
+        window.onload = generateUserList;
+    </script>
+</body>
+
+</html>

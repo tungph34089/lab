@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="inputString">Input:</label>
+    <input type="text" id="inputString" name="inputString">
+    <button type="button" onclick="convertToCamelCase()">Convert</button>
+
+    <div id="outputDiv"></div>
+
+    <script>
+        function convertToCamelCase() {
+            // Lấy giá trị từ input
+            var inputString = document.getElementById('inputString').value;
+
+            // Chuyển đổi chuỗi thành camelCase
+            var camelCaseString = toCamelCase(inputString);
+
+            // Hiển thị kết quả
+            document.getElementById('outputDiv').textContent = camelCaseString;
+        }
+
+        function toCamelCase(input) {
+            // Loại bỏ khoảng trắng và ký tự đặc biệt, chuyển đổi thành mảng các từ
+            var words = input.replace(/[^\w\s]/gi, '').split(/\s+/);
+
+            // Chuyển đổi mỗi từ thành camelCase
+            for (var i = 1; i < words.length; i++) {
+                words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase();
+            }
+
+            // Ghép các từ lại thành chuỗi và chuyển đổi thành camelCase
+            return words.join('');
+        }
+    </script>
+</body>
+
+</html>
